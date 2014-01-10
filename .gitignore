@@ -1,0 +1,4 @@
+.tags
+
+*.o
+fcgi.so
