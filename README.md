@@ -1,4 +1,4 @@
-A minimal [FastCGI](http://www.fastcgi.com/) library.
+A minimal [FastCGI](http://www.fastcgi.com/) library for Lua.
 
 
 Requirements
