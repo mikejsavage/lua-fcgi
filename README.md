@@ -34,12 +34,12 @@ Usage
 Then
 
 	$ spawn-fcgi example.lua -p 9000
-	$ curl localhost?hello -d world
-	uri	/
+	$ curl localhost/path?get -d post
+	uri	/path
 	agent	curl/7.34.0
-	query	hello
-	post	world
+	query	get
+	post	post
 	env
 	FCGI_ROLE=RESPONDER
-	QUERY_STRING=hello
+	QUERY_STRING=get
 	...
