@@ -45,7 +45,7 @@ static int luafcgi_print( lua_State * const L ) {
 }
 
 static int luafcgi_dumpenv( lua_State * const L ) {
-	for( char** var = environ; *var != NULL; var++ ) {
+	for( char * const * var = environ; *var != NULL; var++ ) {
 		printf( "%s\n", *var );
 	}
 
@@ -65,14 +65,14 @@ static int luafcgi_post( lua_State * const L ) {
 		lua_pushliteral( L, "" );
 	}
 	else {
-		char* post_data = malloc( len );
+		char * post_data = malloc( len );
 
 		if( post_data == NULL ) {
 			lua_pushliteral( L, "malloc failed" );
 			return lua_error( L );
 		}
 
-		size_t bytes = fread( post_data, 1, len, stdin );
+		const size_t bytes = fread( post_data, 1, len, stdin );
 
 		if( bytes < len ) {
 			free( post_data );
