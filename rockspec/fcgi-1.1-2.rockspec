@@ -1,9 +1,9 @@
 package = "fcgi"
-version = "1.0-1"
+version = "1.1-2"
 
 source = {
 	url = "git://github.com/mikejsavage/lua-fcgi.git",
-	tag = "v1.0",
+	tag = "v1.1-2",
 }
 
 description = {
@@ -24,6 +24,7 @@ build = {
 
 	build_variables = {
 		LUA_INCDIR = "$(LUA_INCDIR)",
+		LUA_LIBDIR = "$(LUA_LIBDIR)",
 	},
 
 	install = {
