@@ -1,28 +1,18 @@
-SOURCES = $(wildcard src/**/*.c src/*.c)
-OBJECTS = $(patsubst %.c,%.o,$(SOURCES))
-
-TARGET = fcgi.so
-
-LIBS = -lfcgi
-CFLAGS = -std=c99 -O2 -shared -fPIC -D_GNU_SOURCE -Wall -Wextra -Wno-nonnull -Wno-unused-parameter -Wwrite-strings -Wformat=2 -DNDEBUG
+CFLAGS = -O2 -fPIC -Wall
+LDFLAGS = -shared -lfcgi
 
 ifdef LUA_INCDIR
 	CFLAGS += -I$(LUA_INCDIR)
 endif
 
 ifdef LUA_LIBDIR
-	CFLAGS += -L$(LUA_LIBDIR)
+	LIBS += -L$(LUA_LIBDIR)
 endif
 
-.PHONY: debug test clean
+all: fcgi.so
 
-all: $(TARGET)
-
-debug: CFLAGS += -ggdb -UNDEBUG
-debug: all
-
-$(TARGET): $(OBJECTS)
-	$(CC) -o $(TARGET) $^ $(CFLAGS) $(LIBS)
+fcgi.so: src/main.o
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
-	rm -f $(OBJECTS) $(TARGET)
+	rm -f src/main.o fcgi.so
