@@ -23,6 +23,7 @@ build = {
 
 	build_variables = {
 		LUA_INCDIR = "$(LUA_INCDIR)",
+		LUA_LIBDIR = "$(LUA_LIBDIR)",
 	},
 
 	install = {
