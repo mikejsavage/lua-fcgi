@@ -29,24 +29,24 @@
 	#define luaL_newlib( L, l ) ( lua_newtable( L ), luaL_register( L, NULL, l ) ) 
 #endif
 
-static int luafcgi_accept( lua_State * const L ) {
-	const int rv = FCGI_Accept();
+static int luafcgi_accept( lua_State * L ) {
+	int rv = FCGI_Accept();
 
 	lua_pushboolean( L, rv == 0 );
 
 	return 1;
 }
 
-static int luafcgi_getenv( lua_State * const L ) {
-	const char * const key = luaL_checkstring( L, 1 );
-	char * const value = getenv( key );
+static int luafcgi_getenv( lua_State * L ) {
+	const char * key = luaL_checkstring( L, 1 );
+	char * value = getenv( key );
 
 	lua_pushstring( L, value );
 
 	return 1;
 }
 
-static int luafcgi_print( lua_State * const L ) {
+static int luafcgi_print( lua_State * L ) {
 	size_t len;
 	const char * str = lua_tolstring( L, 1, &len );
 
@@ -60,16 +60,16 @@ static int luafcgi_print( lua_State * const L ) {
 	return 0;
 }
 
-static int luafcgi_dumpenv( lua_State * const L ) {
-	for( char * const * var = environ; *var != NULL; var++ ) {
+static int luafcgi_dumpenv( lua_State * L ) {
+	for( char ** var = environ; *var != NULL; var++ ) {
 		printf( "%s\n", *var );
 	}
 
 	return 0;
 }
 
-static int luafcgi_post( lua_State * const L ) {
-	char * const content_length = getenv( "CONTENT_LENGTH" );
+static int luafcgi_post( lua_State * L ) {
+	char * content_length = getenv( "CONTENT_LENGTH" );
 	unsigned long len = strtoul( content_length, NULL, 10 );
 	
 	if( len == ULONG_MAX && errno == ERANGE ) {
@@ -88,7 +88,7 @@ static int luafcgi_post( lua_State * const L ) {
 			return lua_error( L );
 		}
 
-		const size_t bytes = fread( post_data, 1, len, stdin );
+		size_t bytes = fread( post_data, 1, len, stdin );
 
 		if( bytes < len ) {
 			free( post_data );
@@ -113,7 +113,7 @@ static const struct luaL_Reg luafcgi_lib[] = {
 	{ NULL, NULL },
 };
 
-LUALIB_API int luaopen_fcgi( lua_State * const L ) {
+LUALIB_API int luaopen_fcgi( lua_State * L ) {
 	luaL_newlib( L, luafcgi_lib );
 
 	return 1;
