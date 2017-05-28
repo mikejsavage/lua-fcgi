@@ -10,6 +10,10 @@ ifdef LUA_INCDIR
 	CFLAGS += -I$(LUA_INCDIR)
 endif
 
+ifdef LUA_LIBDIR
+	CFLAGS += -L$(LUA_LIBDIR)
+endif
+
 .PHONY: debug test clean
 
 all: $(TARGET)
