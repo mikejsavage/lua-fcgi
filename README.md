@@ -43,3 +43,7 @@ Then
 	FCGI_ROLE=RESPONDER
 	QUERY_STRING=get
 	...
+
+To test locally
+
+	$ spawn-fcgi -p 9000 -n -- ~/bin/lua example.lua   # No fork, and force an interpreter
