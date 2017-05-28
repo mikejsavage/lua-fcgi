@@ -29,6 +29,8 @@
 	#define luaL_newlib( L, l ) ( lua_newtable( L ), luaL_register( L, NULL, l ) ) 
 #endif
 
+extern char ** environ;
+
 static int luafcgi_accept( lua_State * L ) {
 	int rv = FCGI_Accept();
 
