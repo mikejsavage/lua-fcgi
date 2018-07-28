@@ -106,12 +106,19 @@ static int luafcgi_post( lua_State * L ) {
 	return 1;
 }
 
+
+static int luafcgi_finish( lua_State * L ) {
+	FCGI_Finish();
+	return 0;
+}
+
 static const struct luaL_Reg luafcgi_lib[] = {
 	{ "accept", luafcgi_accept },
 	{ "getenv", luafcgi_getenv },
 	{ "dumpenv", luafcgi_dumpenv },
 	{ "print", luafcgi_print },
 	{ "post", luafcgi_post },
+	{ "finish", luafcgi_finish },
 	{ NULL, NULL },
 };
 
