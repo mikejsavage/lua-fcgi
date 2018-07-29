@@ -62,6 +62,15 @@ static int luafcgi_print( lua_State * L ) {
 	return 0;
 }
 
+static int luafcgi_flush( lua_State * L ) {
+	int rv = fflush( stdout );
+	if( rv == EOF ) {
+		lua_pushstring( L, strerror( errno ) );
+		return lua_error( L );
+	}
+	return 0;
+}
+
 static int luafcgi_dumpenv( lua_State * L ) {
 	for( char ** var = environ; *var != NULL; var++ ) {
 		printf( "%s\n", *var );
@@ -117,6 +126,7 @@ static const struct luaL_Reg luafcgi_lib[] = {
 	{ "getenv", luafcgi_getenv },
 	{ "dumpenv", luafcgi_dumpenv },
 	{ "print", luafcgi_print },
+	{ "flush", luafcgi_flush },
 	{ "post", luafcgi_post },
 	{ "finish", luafcgi_finish },
 	{ NULL, NULL },
